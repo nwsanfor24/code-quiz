@@ -21,8 +21,11 @@
   </div>
 
   <div class="progress">
-    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+    <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
   </div>
+
+<!-- WHEN I click the start button
+THEN a timer starts and I am presented with a question -->
 
   <div class="container">
 
@@ -31,16 +34,16 @@
           <div class="card-body text-center">
             <h3 class="card-title">Questions appear here</h3>
             <div class="btn-group-vertical">
-                <button type="button" class="btn btn-primary btn-sm">
+                <button type="button" class="btn btn-primary btn-sm btn-block">
                     Answer #1
                 </button>
-                <button type="button" class="btn btn-secondary btn-sm">
+                <button type="button" class="btn btn-primary btn-sm btn-block">
                     Answer #2
                 </button>
-                <button type="button" class="btn btn-secondary btn-sm">
+                <button type="button" class="btn btn-primary btn-sm btn-block">
                     Answer #3
                 </button>
-                <button type="button" class="btn btn-secondary btn-sm">
+                <button type="button" class="btn btn-primary btn-sm btn-block">
                     Answer #4
                 </button>
             </div>
@@ -62,16 +65,16 @@
 
 
             // Here we create the on click event that gets the user's pick
-            $(".btn-choice").on("click", function() {
+            $(".btn-primary").on("click", function() {
               var compChoice = parseInt(Math.floor((Math.random() * 4) + 1));
               var userChoice = parseInt($(this).val());
 
               $("#computer-pick").text(compChoice);
 
               if (userChoice === compChoice) {
-                $("#result").text("You Won!")
+                $("#result").text("Correct!")
               } else {
-                $("#result").text("You Lost!")
+                $("#result").text("Wrong!")
               };
 
     
