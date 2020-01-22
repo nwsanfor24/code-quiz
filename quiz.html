@@ -64,7 +64,7 @@ THEN a timer starts and I am presented with a question -->
           $(document).ready(function() {
 
 
-            // Here we create the on click event that gets the user's pick
+            // Here we link the button to the correct answer
             $(".btn-primary").on("click", function() {
               var compChoice = parseInt(Math.floor((Math.random() * 4) + 1));
               var userChoice = parseInt($(this).val());
@@ -76,14 +76,6 @@ THEN a timer starts and I am presented with a question -->
               } else {
                 $("#result").text("Wrong!")
               };
-
-    
-
-              // Add code to have the computer guess a random number between 1 and 4
-              // Then determine which button was clicked
-              // Compare the computer and user guess
-              // Inform the user if the've guessed correctly or incorrectly
-
             });
           });
 
