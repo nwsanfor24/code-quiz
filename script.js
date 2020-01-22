@@ -1,3 +1,38 @@
+function buildQuiz(){
+    const output = [];
+
+    // for each question
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+
+        const answers = [];
+
+        for(letter in currentQuestion.answers){
+
+            answers.push(
+                <label>
+                    <input type="radio" name="question${questionNumber}" value="${letter}"></input>
+                    ${letter} :
+                    ${currentQuestion.answers[letter]}
+                </label>
+            );
+        }
+
+        // add this question and its answer to the output
+        output.push(
+            `<div class="question"> ${currentQuestion.question} </div>
+            <div class="answers"> ${answers.join('')} </div>`
+        );
+    })
+}
+
+function showResults(){}
+
+// display quiz right away
+buildQuiz();
+
+// on submit, show results
+submitButton.addEventListener('click', showResults);
+
 const codingQuestions = [
     {
         question: "Who is the fairest of them all?",
