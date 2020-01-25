@@ -1,3 +1,7 @@
+const quizContainer = document.getElementById('quiz');
+const resultsContainer = document.getElementById('results');
+const submitButton = document.getElementById('submit');
+
 const codingQuestions = [
     {
         question: "Who is the fairest of them all?",
@@ -128,3 +132,41 @@ function showResults(){
   // show number of correct answers out of total
   resultsContainer.innerHTML = numCorrect + ' out of ' + myQuestions.length;
 }
+
+// for each question...
+myQuestions.forEach( (currentQuestion, questionNumber) => {
+
+    // find selected answer
+    const answerContainer = answerContainers[questionNumber];
+    const selector = `input[name=question${questionNumber}]:checked`;
+    const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+  
+    // if answer is correct
+    if(userAnswer===currentQuestion.correctAnswer){
+      // add to the number of correct answers
+      numCorrect++;
+  
+      // color the answers green
+      answerContainers[questionNumber].style.color = 'lightgreen';
+    }
+    // if answer is wrong or blank
+    else{
+      // color the answers red
+      answerContainers[questionNumber].style.color = 'red';
+    }
+  });
+
+  
+          // Here we link the button to the correct answer
+          // $(".btn-primary").on("click", function () {
+          //   var compChoice = parseInt(Math.floor((Math.random() * 4) + 1));
+          //   var userChoice = parseInt($(this).val());
+
+          //   $("#computer-pick").text(compChoice);
+
+          //   if (userChoice === compChoice) {
+          //     $("#result").text("Correct!")
+          //   } else {
+          //     $("#result").text("Wrong!")
+          //   };
+          // });
