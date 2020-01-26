@@ -1,238 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <title>Number Checker</title>
-
-  <!-- Added link to the jQuery Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-  <!-- Added a link to Bootstrap-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-  <!--Added a link to an external JavaScript file-->
-  <script src="script.js"></script>
-  <script src="format.css"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="format.css" rel="stylesheet">
+  <script defer src="script.js"></script>
+  <title>Quiz App</title>
 </head>
-
 <body>
-
-  <div class="jumbotron">
-    <h1 class="text-center">Coding Quiz</h1>
-    <h2 class="text-center">Try and guess them all!!!</h2>
-  </div>
-
-  <div class="progress">
-    <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0"
-      aria-valuemax="100">20%</div>
-  </div>
-
-  <!-- WHEN I click the start button
-THEN a timer starts and I am presented with a question -->
-
   <div class="container">
-    <div class="card mt-1">
-      <div class="card-header">
-        <div class="card-body text-center">
-          <h3 class="card-title">Questions appear here</h3>
-          <div class="btn-group-vertical">
-            <button type="button" class="btn btn-primary btn-sm btn-block" id="quiz">
-              Answer #1
-            </button>
-            <button type="button" class="btn btn-primary btn-sm btn-block" id="quiz">
-              Answer #2
-            </button>
-            <button type="button" class="btn btn-primary btn-sm btn-block" id="quiz">
-              Answer #3
-            </button>
-            <button type="button" class="btn btn-primary btn-sm btn-block" id="quiz">
-              Answer #4
-            </button>
-          </div>
-        </div>
+    <div id="question-container" class="hide">
+      <div id="question">Question</div>
+      <div id="answer-buttons" class="btn-grid">
+        <button class="btn">Answer 1</button>
+        <button class="btn">Answer 2</button>
+        <button class="btn">Answer 3</button>
+        <button class="btn">Answer 4</button>
       </div>
-
-      <div class="card mt-1">
-        <div class="card-header">
-          <div class="card-body text-center">
-            <h3 class="card-title">Result</h3>
-            <h1 id="result"></h1>
-          </div>
-        </div>
-
-      </div>
-
-
-
-
-      <script type="text/javascript">
-        $(document).ready(function () {
-
-          function buildQuiz() {
-            const output = [];
-
-            // for each question
-            myQuestions.forEach(
-              
-            (currentQuestion, questionNumber) => {
-
-              const answers = [];
-
-              for (letter in currentQuestion.answers) {
-
-                answers.push(
-                  <label>
-                    <input type="radio" name="question${questionNumber}" value="${letter}"></input>
-                    ${letter} :
-                    ${currentQuestion.answers[letter]}
-                  </label>
-                );
-              }
-
-              // add this question and its answer to the output
-              output.push(
-                `<div class="question"> ${currentQuestion.question} </div>
-                 <div class="answers"> ${answers.join('')} </div>`
-              );
-            })
-            quizContainer.innerHTML = output.join('');
-          }
-
-          // Store the list of answer choices
-          const answers = [];
-
-          // and for each available answer...add an html radio button
-          for (letter in currentQuestion.answers) {
-            answers.push(
-              `<label>
-                <input type="radio" name="question${questionNumber}" value="${letter}">
-                ${letter} :
-                ${currentQuestion.answers[letter]}
-               </label>`
-            );
-          }
-
-          // add this question and its answers to the output
-          output.push(
-            `<div class="question"> ${currentQuestion.question} </div>
-             <div class="answers"> ${answers.join('')} </div>`
-          );
-
-          function showResults() {
-            // gather answer containers from our quiz
-            const answerContainers = quizContainer.querySelectorAll('.answers');
-
-            // keep track of user's answers
-            let numCorrect = 0;
-
-            // for each question...
-            myQuestions.forEach((currentQuestion, questionNumber) => {
-
-              // find selected answer
-              const answerContainer = answerContainers[questionNumber];
-              const selector = 'input[name=question' + questionNumber + ']:checked';
-              const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
-              // if answer is correct
-              if (userAnswer === currentQuestion.correctAnswer) {
-                // add to the number of correct answers
-                numCorrect++;
-
-                // color the answers green
-                answerContainers[questionNumber].style.color = 'lightgreen';
-              }
-              // if answer is wrong or blank
-              else {
-                // color the answers red
-                answerContainers[questionNumber].style.color = 'red';
-              }
-            });
-
-            // show number of correct answers out of total
-            resultsContainer.innerHTML = numCorrect + ' out of ' + myQuestions.length;
-          }
-
-          // for each question...
-          myQuestions.forEach((currentQuestion, questionNumber) => {
-
-            // find selected answer
-            const answerContainer = answerContainers[questionNumber];
-            const selector = `input[name=question${questionNumber}]:checked`;
-            const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
-            // if answer is correct
-            if (userAnswer === currentQuestion.correctAnswer) {
-              // add to the number of correct answers
-              numCorrect++;
-
-              // color the answers green
-              answerContainers[questionNumber].style.color = 'lightgreen';
-            }
-            // if answer is wrong or blank
-            else {
-              // color the answers red
-              answerContainers[questionNumber].style.color = 'red';
-            }
-          });
-
-          const quizContainer = document.getElementById('button');
-          const resultsContainer = document.getElementById('results');
-          const submitButton = document.getElementById('submit');
-
-          const codingQuestions = [
-            {
-              question: "Who is the fairest of them all?",
-              answers: {
-                a: "Snow White",
-                b: "Sleeping Beauty",
-                c: "Waluigi, obviously",
-                d: "Wario, but it's probably not"
-              },
-              correctAnswer: "c"
-            },
-            {
-              question: "Who is Luke's Father?",
-              answers: {
-                a: "Papa Palpatine",
-                b: "Darth Vader",
-                c: "Ben Kenobi",
-                d: "Rey Skywalker"
-              },
-              correctAnswer: "a"
-            },
-            {
-              question: "Why is my Dad such a dick?",
-              answers: {
-                a: "Because he's fat",
-                b: "Because he's right",
-                c: "Because when you look in the mirror, you see his face and not yours so you start questioning your reality and wondering if this is your future",
-                d: "It's definitely C but we'll throw this one in for good measure"
-              },
-              correctAnswer: "c"
-            },
-            {
-              question: "Placeholder question",
-              answers: {
-                a: "Answer",
-                b: "Answer",
-                c: "Answer",
-                d: "The Right Answers"
-              },
-              correctAnswer: "d"
-            },
-          ];
-
-          // display quiz right away
-          buildQuiz();
-
-          // on submit, show results
-          submitButton.addEventListener('click', showResults);
-        });
-
-      </script>
-
+    </div>
+    <div class="controls">
+      <button id="start-btn" class="start-btn btn">Start</button>
+      <button id="next-btn" class="next-btn btn hide">Next</button>
+    </div>
+  </div>
 </body>
-
 </html>
