@@ -3,9 +3,12 @@ var nextButton = document.getElementById('next-btn')
 var questionContainerElement = document.getElementById('question-container')
 var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
-var resultsContainer = document.getElementById('result');
+var scoreDiv = document.getElementById('scoreContainer');
 
 let shuffledQuestions, currentQuestionIndex
+
+let timer;
+let score = 0;
 
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () => {
@@ -13,6 +16,7 @@ nextButton.addEventListener('click', () => {
   setNextQuestion()
 })
 
+//Button to start game
 function startGame() {
   startButton.classList.add('hide')
   shuffledQuestions = questions.sort(() => Math.random() - .5)
@@ -21,11 +25,33 @@ function startGame() {
   setNextQuestion()
 }
 
+function renderCounter(){
+  if(count <= questionTime){
+      counter.innerHTML = count;
+      timeGauge.style.width = count * gaugeUnit + "px";
+      count++
+  }else{
+      count = 0;
+      // change progress color to red
+      answerIsWrong();
+      if(runningQuestion < lastQuestion){
+          runningQuestion++;
+          renderQuestion();
+      }else{
+          // end the quiz and show the score
+          clearInterval(timer);
+          scoreRender();
+      }
+  }
+}
+
+//After answering the question, it goes to the next question
 function setNextQuestion() {
   resetState()
   showQuestion(shuffledQuestions[currentQuestionIndex])
 }
 
+//function to show the question
 function showQuestion(question) {
   questionElement.innerText = question.question
   question.answers.forEach(answer => {
@@ -34,12 +60,14 @@ function showQuestion(question) {
     button.classList.add('btn')
     if (answer.correct) {
       button.dataset.correct = answer.correct
+      score++;
     }
     button.addEventListener('click', selectAnswer)
     answerButtonsElement.appendChild(button)
   })
 }
 
+//returns question to default state
 function resetState() {
   clearStatusClass(document.body)
   nextButton.classList.add('hide')
@@ -48,6 +76,7 @@ function resetState() {
   }
 }
 
+//user picks an answer - it shows whether it's right or wrong
 function selectAnswer(e) {
   const selectedButton = e.target
   const correct = selectedButton.dataset.correct
@@ -60,8 +89,9 @@ function selectAnswer(e) {
   } else {
     startButton.innerText = 'Restart'
     startButton.classList.remove('hide')
-  }
-}
+    scoreRender(); 
+  } 
+};
 
 function setStatusClass(element, correct) {
   clearStatusClass(element)
@@ -76,6 +106,16 @@ function clearStatusClass(element) {
   element.classList.remove('correct')
   element.classList.remove('wrong')
 }
+
+function scoreRender(){
+  scoreDiv.style.display = "block";
+  
+  // calculate the amount of question percent answered by the user
+  const scorePerCent = Math.round(score);
+  scoreDiv.innerHTML += "<p>"+ scorePerCent +" out of five</p>";
+  clearStatusClass();
+}
+
 
 const questions = [
   {
