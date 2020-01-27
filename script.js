@@ -4,11 +4,13 @@ var questionContainerElement = document.getElementById('question-container')
 var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
 var scoreDiv = document.getElementById('scoreContainer');
+var timeGauge = document.getElementById('iTimeShow');
 
 let shuffledQuestions, currentQuestionIndex
 
 let timer;
 let score = 0;
+let count = 60;
 
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () => {
@@ -28,8 +30,7 @@ function startGame() {
 function renderCounter(){
   if(count <= questionTime){
       counter.innerHTML = count;
-      timeGauge.style.width = count * gaugeUnit + "px";
-      count++
+      count--
   }else{
       count = 0;
       // change progress color to red
@@ -89,9 +90,10 @@ function selectAnswer(e) {
   } else {
     startButton.innerText = 'Restart'
     startButton.classList.remove('hide')
-    scoreRender(); 
-  } 
+    scoreRender();
+  }
 };
+
 
 function setStatusClass(element, correct) {
   clearStatusClass(element)
@@ -111,9 +113,8 @@ function scoreRender(){
   scoreDiv.style.display = "block";
   
   // calculate the amount of question percent answered by the user
-  const scorePerCent = Math.round(score);
+  const scorePerCent = Math.round(score - 4);
   scoreDiv.innerHTML += "<p>"+ scorePerCent +" out of five</p>";
-  clearStatusClass();
 }
 
 
