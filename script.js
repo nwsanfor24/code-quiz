@@ -1,8 +1,9 @@
-const startButton = document.getElementById('start-btn')
-const nextButton = document.getElementById('next-btn')
-const questionContainerElement = document.getElementById('question-container')
-const questionElement = document.getElementById('question')
-const answerButtonsElement = document.getElementById('answer-buttons')
+var startButton = document.getElementById('start-btn')
+var nextButton = document.getElementById('next-btn')
+var questionContainerElement = document.getElementById('question-container')
+var questionElement = document.getElementById('question')
+var answerButtonsElement = document.getElementById('answer-buttons')
+var resultsContainer = document.getElementById('result');
 
 let shuffledQuestions, currentQuestionIndex
 
@@ -77,31 +78,40 @@ function clearStatusClass(element) {
 }
 
 const questions = [
-    {
-        question: "Who is the fairest of them all?",
-        answers: [
-          { text: 'Snow Whte', correct: false },
-          { text: 'Sleeping Beauty', correct: false},
-          { text: 'Waluigi', correct: true},
-          { text: 'Wario', correct: false}
-        ]
-    },
-    {
-        question: "Who is Luke's Father?",
-        answers: [
-          { text: 'Papa Palpatine', correct: true },
-          { text: 'Darth Vader', correct: false},
-          { text: 'Kylo Ren', correct: false},
-          { text: 'Rey Skywalker', correct: false}
-        ]
-    },
-    {
-        question: "Why is my Dad such a dick?",
-        answers: [
-          { text: 'Because', correct: true },
-          { text: 'He is not', correct: false },
-          { text: 'He still not', correct: false },
-          { text: 'Stop asking me', correct: false}
-        ]
-    },
+  {
+    question: "What is a parseInt function?",
+    answers: [
+      { text: 'Definitely not this one', correct: false },
+      { text: 'Not this one', correct: false },
+      { text: 'Parses a string and returns an integer', correct: true },
+      { text: 'Especially not this one', correct: false }
+    ]
+  },
+  {
+    question: "What does a toString method do?",
+    answers: [
+      { text: 'Returns a boolean value as a string', correct: true },
+      { text: 'Definitely the first one', correct: false },
+      { text: 'This one is false', correct: false },
+      { text: 'This one is also false', correct: false }
+    ]
+  },
+  {
+    question: "How are you today?",
+    answers: [
+      { text: 'Great! Thank you for asking', correct: true },
+      { text: 'I am alright', correct: false },
+      { text: 'I could be better', correct: false },
+      { text: 'Do not ask me about my financial situation', correct: false }
+    ]
+  },
+  {
+    question: "What do you use to create a variable?",
+    answers: [
+      { text: 'const', correct: true },
+      { text: 'var', correct: true },
+      { text: 'let', correct: true },
+      { text: 'All of these answers are true', correct: true },
+    ]
+  },
 ];
