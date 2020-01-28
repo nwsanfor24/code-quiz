@@ -4,13 +4,54 @@ var questionContainerElement = document.getElementById('question-container')
 var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
 var scoreDiv = document.getElementById('scoreContainer');
-var timeGauge = document.getElementById('iTimeShow');
+var timer = document.getElementById('iTimeShow');
 
 let shuffledQuestions, currentQuestionIndex
 
-let timer;
 let score = 0;
 let count = 60;
+
+//Timer
+var mins = 2;
+
+var secs = mins * 60;
+
+function countdown() {
+  setTimeout(Decrement(), 60);
+}
+
+function Decrement() {
+  if (timer) {
+    minutes = mins
+    seconds = secs
+
+    if (seconds < 59) {
+      seconds.value = secs;
+    } else {
+      minutes.value = getminutes();
+      seconds.value = getseconds();
+    }
+    if (mins < 1) {
+      minutes.style.color = "red";
+      seconds.style.color = "red";
+    }
+    if (mins < 0) {
+      alert("Times up!!");
+      minutes.value = 0;
+      seconds.value = 0;
+    } else {
+      secs--;
+      setTimeout(Decrement(), 1000);
+    }
+  }
+  function getminutes() {
+    mins = Math.floor(secs / 60);
+    return mins;
+  }
+  function getseconds() {
+    return secs - Math.round(mins * 60);
+  }
+};
 
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () => {
@@ -25,25 +66,6 @@ function startGame() {
   currentQuestionIndex = 0
   questionContainerElement.classList.remove('hide')
   setNextQuestion()
-}
-
-function renderCounter(){
-  if(count <= questionTime){
-      counter.innerHTML = count;
-      count--
-  }else{
-      count = 0;
-      // change progress color to red
-      answerIsWrong();
-      if(runningQuestion < lastQuestion){
-          runningQuestion++;
-          renderQuestion();
-      }else{
-          // end the quiz and show the score
-          clearInterval(timer);
-          scoreRender();
-      }
-  }
 }
 
 //After answering the question, it goes to the next question
@@ -113,7 +135,7 @@ function scoreRender(){
   scoreDiv.style.display = "block";
   
   // calculate the amount of question percent answered by the user
-  const scorePerCent = Math.round(score - 4);
+  const scorePerCent = Math.round(score - 5);
   scoreDiv.innerHTML += "<p>"+ scorePerCent +" out of five</p>";
 }
 
